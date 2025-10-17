@@ -72,7 +72,7 @@ public class TestDataFactory {
         empleado.setApellido(apellido);
         empleado.setEmail(email);
         empleado.setSalario(salario);
-        empleado.setFechaContratacion(LocalDate.now().minusMonths(6)); // Contratado hace 6 meses
+        empleado.setFechaContratacion(LocalDate.now().minusMonths(6)); // Contratado hace 6 meses - VÁLIDA
         empleado.setDepartamento(departamento);
         return empleado;
     }
@@ -85,14 +85,14 @@ public class TestDataFactory {
     public static Empleado crearEmpleadoSenior(Departamento departamento) {
         Empleado empleado = crearEmpleado("María", "García", "maria.garcia@empresa.com",
                 new BigDecimal("95000.00"), departamento);
-        empleado.setFechaContratacion(LocalDate.now().minusYears(3)); // Senior con 3 años
+        empleado.setFechaContratacion(LocalDate.now().minusYears(3)); // Senior con 3 años - VÁLIDA
         return empleado;
     }
 
     public static Empleado crearEmpleadoJunior(Departamento departamento) {
         Empleado empleado = crearEmpleado("Carlos", "López", "carlos.lopez@empresa.com",
                 new BigDecimal("45000.00"), departamento);
-        empleado.setFechaContratacion(LocalDate.now().minusMonths(2)); // Junior recién contratado
+        empleado.setFechaContratacion(LocalDate.now().minusMonths(2)); // Junior recién contratado - VÁLIDA
         return empleado;
     }
 

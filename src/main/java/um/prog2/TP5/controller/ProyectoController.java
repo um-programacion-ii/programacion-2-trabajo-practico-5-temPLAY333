@@ -2,8 +2,10 @@ package um.prog2.TP5.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import um.prog2.TP5.dto.AsignacionEmpleadosRequest;
 import um.prog2.TP5.entity.Proyecto;
 import um.prog2.TP5.service.ProyectoService;
 
@@ -39,6 +41,18 @@ public class ProyectoController {
     public Proyecto actualizar(@PathVariable Long id, @Valid @RequestBody Proyecto proyecto) {
         return proyectoService.actualizar(id, proyecto);
     }
+
+    @PutMapping("/{id}/empleados")
+    public ResponseEntity<Proyecto> asignarEmpleados(
+            @PathVariable Long id,
+            @Valid @RequestBody AsignacionEmpleadosRequest request) {
+
+        Proyecto proyecto = proyectoService.buscarPorId(id);
+        Proyecto proyectoActualizado = proyectoService.asignarEmpleados(proyecto, request.getEmpleadosIds());
+
+        return ResponseEntity.ok(proyectoActualizado);
+    }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

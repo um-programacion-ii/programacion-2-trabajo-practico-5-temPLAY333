@@ -21,11 +21,17 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     @Override
-    public Empleado guardar(Empleado empleado) {
+    public Empleado validarEmpleado(Empleado empleado) {
         if (empleadoRepository.findByEmail(empleado.getEmail()).isPresent()) {
             throw new EmailDuplicadoException("El email ya está registrado: " + empleado.getEmail());
         }
         return empleadoRepository.save(empleado);
+    }
+
+    @Override
+    public Empleado buscarPorEmail(String email) {
+        return empleadoRepository.findByEmail(email)
+                .orElseThrow(() -> new EmpleadoNoEncontradoException("Empleado no encontrado con Email: " + email));
     }
 
     @Override

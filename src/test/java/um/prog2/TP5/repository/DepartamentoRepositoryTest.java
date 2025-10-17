@@ -114,7 +114,7 @@ class DepartamentoRepositoryTest {
     @Test
     void existsById_departamentoExistente_deberiaRetornarTrue() {
         // Given
-        Departamento departamento = TestDataFactory.crearDepartamento("IT");
+        Departamento departamento = TestDataFactory.crearDepartamento("Sistemas");
         entityManager.persistAndFlush(departamento);
 
         // When
