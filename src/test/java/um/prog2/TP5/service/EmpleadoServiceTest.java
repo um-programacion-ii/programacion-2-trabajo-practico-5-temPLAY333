@@ -33,14 +33,14 @@ class EmpleadoServiceTest extends BaseIntegrationTest {
     }
 
     @Test
-    void guardar_empleadoValido_deberiaGuardarCorrectamente() {
+    void guardar_empleadoValido_deberiaValidarEmpleadoCorrectamente() {
         // Given
         Departamento departamento = departamentoRepository.findById(DEPARTAMENTO_DESARROLLO_ID).orElseThrow();
         Empleado empleado = TestDataFactory.crearEmpleado("Nuevo", "Empleado", "nuevo@empresa.com",
                                                          new BigDecimal("55000"), departamento);
 
         // When
-        Empleado guardado = empleadoService.guardar(empleado);
+        Empleado guardado = empleadoService.validarEmpleado(empleado);
 
         // Then
         assertThat(guardado)
@@ -56,14 +56,14 @@ class EmpleadoServiceTest extends BaseIntegrationTest {
     }
 
     @Test
-    void guardar_empleadoConEmailDuplicado_deberieLanzarExcepcion() {
+    void validarEmpleado_empleadoConEmailDuplicado_deberieLanzarExcepcion() {
         // Given - Intentar crear empleado con email que ya existe
         Departamento departamento = departamentoRepository.findById(DEPARTAMENTO_MARKETING_ID).orElseThrow();
         Empleado empleadoDuplicado = TestDataFactory.crearEmpleado("Otro", "Nombre", "juan.perez@empresa.com",
                                                                   new BigDecimal("60000"), departamento);
 
         // When & Then
-        assertThatThrownBy(() -> empleadoService.guardar(empleadoDuplicado))
+        assertThatThrownBy(() -> empleadoService.validarEmpleado(empleadoDuplicado))
                 .isInstanceOf(EmailDuplicadoException.class)
                 .hasMessageContaining("El email ya está registrado: juan.perez@empresa.com");
     }

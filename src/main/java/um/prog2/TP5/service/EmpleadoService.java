@@ -7,7 +7,8 @@ import java.util.List;
 
 // Interface del servicio
 public interface EmpleadoService {
-    Empleado guardar(Empleado empleado);
+    Empleado validarEmpleado(Empleado empleado);
+    Empleado buscarPorEmail(String email);
     Empleado buscarPorId(Long id);
     List<Empleado> buscarPorDepartamento(String nombreDepartamento);
     List<Empleado> buscarPorRangoSalario(BigDecimal salarioMin, BigDecimal salarioMax);

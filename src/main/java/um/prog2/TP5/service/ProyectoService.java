@@ -10,5 +10,6 @@ public interface ProyectoService {
     List<Proyecto> obtenerTodos();
     List<Proyecto> obtenerProyectosActivos();
     Proyecto actualizar(Long id, Proyecto proyecto);
+    Proyecto asignarEmpleados(Proyecto proyecto, List<Long> empleadosIds);
     void eliminar(Long id);
 }
