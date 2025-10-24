@@ -13,6 +13,15 @@ import java.time.LocalDate;
 public class TestDataFactory {
 
     // Métodos para Proyecto (existentes)
+    public static Proyecto crearProyecto(String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+        Proyecto proyecto = new Proyecto();
+        proyecto.setNombre(nombre);
+        proyecto.setDescripcion("Descripción del proyecto " + nombre);
+        proyecto.setFechaInicio(fechaInicio);
+        proyecto.setFechaFin(fechaFin);
+        return proyecto;
+    }
+
     public static Proyecto crearProyectoActivo(String nombre) {
         Proyecto proyecto = new Proyecto();
         proyecto.setNombre(nombre);

@@ -1,10 +1,12 @@
 package um.prog2.TP5.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ public class Departamento {
     @Column(length = 500)
     private String descripcion;
 
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Empleado> empleados = new ArrayList<>();
 }
