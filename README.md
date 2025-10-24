@@ -478,30 +478,11 @@ mvn test
 mvn test jacoco:report
 ```
 
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
 ## 📝 Licencia
 
 Este proyecto es parte de un trabajo práctico académico.
 
-## 👥 Autores
+## 👥 Autor
 
-- Desarrollo: Estudiantes de Programación 2
+- Desarrollo: Tomás BOurguet
 - Institución: Universidad de Mendoza
-
-## 📞 Soporte
-
-Para preguntas o problemas:
-- Crear un issue en el repositorio
-- Contactar al equipo docente
-
----
-
-⭐ Si este proyecto te fue útil, considera darle una estrella!
-
