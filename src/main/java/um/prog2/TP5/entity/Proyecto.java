@@ -1,10 +1,12 @@
 package um.prog2.TP5.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import um.prog2.TP5.validation.ValidDateRange;
 import java.time.LocalDate;
@@ -39,6 +41,19 @@ public class Proyecto {
     @Temporal(TemporalType.DATE)
     private LocalDate fechaFin;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "proyectos")
     private Set<Empleado> empleados = new HashSet<>();
+
+    /**
+     * Calcula si el proyecto está activo.
+     * Un proyecto está activo si no tiene fecha de fin o si la fecha de fin es futura.
+     */
+    @JsonProperty("activo")
+    public boolean isActivo() {
+        if (fechaFin == null) {
+            return true;
+        }
+        return fechaFin.isAfter(LocalDate.now()) || fechaFin.isEqual(LocalDate.now());
+    }
 }

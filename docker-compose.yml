@@ -1,0 +1,85 @@
+# ========================================
+# Docker Compose - Sistema de Gestión de Empleados
+# ========================================
+# Este archivo define los servicios de base de datos necesarios para ejecutar
+# la aplicación en diferentes entornos (desarrollo, testing, producción).
+#
+# Uso:
+#   - Iniciar servicios: docker-compose up -d
+#   - Detener servicios: docker-compose down
+#   - Ver logs: docker-compose logs -f
+#   - Eliminar volúmenes: docker-compose down -v
+# ========================================
+
+services:
+  # ========================================
+  # Servicio MySQL
+  # ========================================
+  # Base de datos principal para entorno de producción y desarrollo
+  # Puerto: 3306 (accesible desde localhost:3306)
+  mysql:
+    image: mysql:8.0                      # Imagen oficial de MySQL versión 8.0
+    container_name: empleados_mysql       # Nombre del contenedor
+    environment:
+      # Credenciales de administrador
+      MYSQL_ROOT_PASSWORD: root_password  # Contraseña del usuario root
+      # Base de datos y usuario de aplicación
+      MYSQL_DATABASE: empleados_db        # Base de datos que se creará automáticamente
+      MYSQL_USER: empleados_user          # Usuario de aplicación (no root)
+      MYSQL_PASSWORD: empleados_pass      # Contraseña del usuario de aplicación
+    ports:
+      - "3306:3306"                       # Mapeo de puerto host:contenedor
+    volumes:
+      # Persistencia de datos - los datos sobreviven al reinicio del contenedor
+      - mysql_data:/var/lib/mysql
+    networks:
+      - empleados_network                 # Red interna para comunicación entre servicios
+    healthcheck:
+      # Verificación de salud del servicio
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # ========================================
+  # Servicio PostgreSQL
+  # ========================================
+  # Base de datos alternativa para pruebas y desarrollo
+  # Puerto: 5432 (accesible desde localhost:5432)
+  postgres:
+    image: postgres:16                    # Imagen oficial de PostgreSQL versión 16
+    container_name: empleados_postgres    # Nombre del contenedor
+    environment:
+      # Credenciales de la base de datos
+      POSTGRES_DB: empleados_db           # Base de datos que se creará automáticamente
+      POSTGRES_USER: empleados_user       # Usuario de la base de datos
+      POSTGRES_PASSWORD: empleados_pass   # Contraseña del usuario
+    ports:
+      - "5432:5432"                       # Mapeo de puerto host:contenedor
+    volumes:
+      # Persistencia de datos - los datos sobreviven al reinicio del contenedor
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - empleados_network                 # Red interna para comunicación entre servicios
+    healthcheck:
+      # Verificación de salud del servicio
+      test: ["CMD-SHELL", "pg_isready -U empleados_user"]
+      timeout: 20s
+      retries: 10
+
+# ========================================
+# Redes
+# ========================================
+# Red bridge personalizada para comunicación entre servicios
+# Permite que los contenedores se comuniquen entre sí usando nombres de servicio
+networks:
+  empleados_network:
+    driver: bridge
+
+# ========================================
+# Volúmenes
+# ========================================
+# Volúmenes nombrados para persistencia de datos
+# Los datos se mantienen incluso si los contenedores son eliminados
+volumes:
+  mysql_data:      # Volumen para datos de MySQL
+  postgres_data:   # Volumen para datos de PostgreSQL

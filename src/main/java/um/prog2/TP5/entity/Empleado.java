@@ -1,9 +1,11 @@
 package um.prog2.TP5.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -51,6 +53,8 @@ public class Empleado {
     @JoinColumn(name = "departamento_id")
     private Departamento departamento;
 
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "empleado_proyecto",
